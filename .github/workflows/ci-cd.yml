@@ -15,7 +15,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Check out repository code
+        uses: actions/checkout@v6
+
+      - name: Update commit hash
+        run: |
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+          sed -i "s/9eec34d2-fa74-413c-a262-4a7ec75baa90/$SHORT_SHA/g" templates/index.html
 
       - name: Set up Python version
         uses: actions/setup-python@v5
@@ -45,6 +51,7 @@ jobs:
           path: |
             app.py
             requirements.txt
+            templates/
 
   deploy:
     runs-on: ubuntu-latest
