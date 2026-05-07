@@ -52,6 +52,7 @@ jobs:
             app.py
             requirements.txt
             templates/
+            static/
 
   deploy:
     runs-on: ubuntu-latest
