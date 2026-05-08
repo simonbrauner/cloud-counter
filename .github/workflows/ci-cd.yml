@@ -23,6 +23,15 @@ jobs:
           SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
           sed -i "s/9eec34d2-fa74-413c-a262-4a7ec75baa90/$SHORT_SHA/g" templates/index.html
 
+      - name: Randomize heading color
+        run: |
+          R=$((RANDOM%256))
+          G=$((RANDOM%256))
+          B=$((RANDOM%256))
+          NEW_COLOR=$(printf '%02x%02x%02x' "$R" "$G" "$B")
+          MARKER='0a271319-b06c-4e46-b24c-0fde677cf461'
+          sed -iE "s/[0-9a-f]\{6\}; \/\* $MARKER/$NEW_COLOR; \/\* $MARKER/g" static/style.css
+
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
